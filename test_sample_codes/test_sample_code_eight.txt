@@ -1,0 +1,88 @@
+import numpy as np
+from scipy.io.wavfile import write
+import re
+from random import choice
+
+
+samplerate = 5700
+#441000 #Normal Frequecy in Hz
+
+def get_wave(freq, duration= 0.25):
+    '''
+    Function takes the "frequecy" and "time_duration" for a wave 
+    as the input and returns a "numpy array" of values at all points 
+    in time
+    '''
+    
+    amplitude = 4096
+    #Norm: 4096
+    t = np.linspace(0, duration, int(samplerate * duration))
+    wave = amplitude * np.sin(2 * np.pi * freq * t)
+    
+    return wave
+    
+    
+def get_piano_notes():
+    '''
+    Returns a dict object for all the piano 
+    note's frequencies
+    '''
+
+    # White keys are in Uppercase and black keys (sharps) are in lowercase
+    #O and o is c and c sharp in the next octave
+    octave =  ['C', 'c', 'D', 'd', 'E', 'F', 'f', 'G', 'g', 'A', 'a', 'B','C2','c2','D2','d2','E2','F2','f2','G2','g2']
+    base_freq = 261.63 #Frequency of Note C4
+    
+    note_freqs = {octave[i]: base_freq * pow(2,(i/12)) for i in range(len(octave))}        
+    note_freqs[''] = 0.0 # silent note
+    note_freqs['s'] = 0.0
+    
+    return note_freqs
+
+def random_song():
+    octave = ['C, ', 'c, ', 'D, ', 'd, ', 'E, ', 'F, ', 'f, ', 'G, ', 'g, ', 'A, ', 'a, ', 'B, ']
+    ran_song = ""
+    for x in range(570):
+        ran_song += choice(octave)
+    return ran_song
+
+def typed_song():
+    input_song = "E, D, C, D, E, E, "
+    return input_song
+
+
+#problem: only allows one octave as numbers are removed
+#next time make a loop to not allow number removal and to remove any non-key letters
+
+def get_song_data(music_notes):
+    """
+    removes all char except letters and places a '-' between them
+    """
+    music_notes = re.sub('[\W_]+','', music_notes )
+    music_notes = music_notes.replace("","-")
+
+
+    '''
+    Function to concatenate all the waves (notes)
+    '''
+    note_freqs = get_piano_notes() # Function that we made earlier
+    song = [get_wave(note_freqs[note]) for note in music_notes.split('-')]
+    song = np.concatenate(song)
+    return song
+    
+#so current file can be imported
+if __name__ == "__main__":
+    # To get the piano note's frequencies
+    note_freqs = get_piano_notes() 
+    
+    #can also be random song
+    music_notes = typed_song()
+
+    data = get_song_data(music_notes)
+
+    #change file name to whatever
+    write('test.wav', samplerate, data.astype(np.int16))
+
+
+
+

@@ -1,0 +1,125 @@
+import random
+from uuid import uuid4
+
+from flask import Flask, make_response, request
+from google.cloud import firestore
+
+
+app = Flask(__name__)
+db = firestore.Client()
+sessions = db.collection('sessions')
+greetings = [
+    'Hello World',
+    'Hallo Welt',
+    'Ciao Mondo',
+    'Salut le Monde',
+    'Hola Mundo',
+]
+
+
+@firestore.transactional
+def get_session_data(transaction, session_id):
+Looks up (or creates) the session with the given session_id.
+        Creates a random session_id if none is provided. Increments
+        the number of views in this session. Updates are done in a
+        transaction to make sure no saved increments are overwritten.
+
+    if session_id is None:
+        session_id = str(uuid4())   # Random, unique identifier
+
+    doc_ref = sessions.document(document_id=session_id)
+    doc = doc_ref.get(transaction=transaction)
+    if doc.exists:
+        session = doc.to_dict()
+    else:
+        session = {
+            'greeting': random.choice(greetings),
+            'views': 0
+        }
+
+    session['views'] += 1   # This counts as a view
+    transaction.set(doc_ref, session)
+
+    session['session_id'] = session_id
+    return session
+
+
+@app.route('/', methods=['GET'])
+def home():
+    template = '<body>{} views for "{}"</body>'
+
+    transaction = db.transaction()
+    session = get_session_data(transaction, request.cookies.get('session_id'))
+
+    resp = make_response(template.format(
+        session['views'],
+        session['greeting']
+        )
+    )
+    resp.set_cookie('session_id', session['session_id'], httponly=True)
+    return resp
+
+
+if __name__ == '__main__':
+    app.run(host='127.0.0.1', port=8080)
+
+
+
+
+
+
+def main():
+    for n in primes():
+        if n < 1000:
+            print(n)
+        else:
+            break
+
+def _odd_iter():
+    n = 1
+    while True:
+        n = n + 2
+        yield n
+
+def _not_divisible(n):
+    return lambda x: x % n > 0
+
+def primes():
+    yield 2
+    it = _odd_iter()
+    while True:
+        n = next(it)
+        yield n
+        it = filter(_not_divisible(n), it)
+
+if __name__ == '__main__':
+    main()
+
+
+
+def lazy_sum(*args):
+    def sum():
+        ax = 0
+        for n in args:
+            ax = ax + n
+        return ax
+    return sum
+
+f = lazy_sum(1, 2, 4, 5, 7, 8, 9)
+print(f)
+print(f())
+
+# why f1(), f2(), f3() returns 9, 9, 9 rather than 1, 4, 9?
+def count():
+    fs = []
+    for i in range(1, 4):
+        def f():
+             return i * i
+        fs.append(f)
+    return fs
+
+f1, f2, f3 = count()
+
+print(f1())
+print(f2())
+print(f3())

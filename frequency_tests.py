@@ -1,0 +1,36 @@
+#import distances
+import check_freq as cf
+import test_codes as tc
+
+
+print('=======================================================================Test One=======================================================================')
+print(cf.sorted_letter_freq(cf.most_frequent_letters(tc.sample_code_one)))
+print(cf.sorted_symbol_freq(cf.most_frequent_symbols(tc.sample_code_one)))
+print('=======================================================================Test Two========================================================================')
+print(cf.sorted_letter_freq(cf.most_frequent_letters(tc.sample_code_two)))
+print(cf.sorted_symbol_freq(cf.most_frequent_symbols(tc.sample_code_two)))
+print('=======================================================================Test Three=======================================================================')
+print(cf.sorted_letter_freq(cf.most_frequent_letters(tc.sample_code_three)))
+print(cf.sorted_symbol_freq(cf.most_frequent_symbols(tc.sample_code_three)))
+print('=======================================================================Test Four========================================================================')
+print(cf.sorted_letter_freq(cf.most_frequent_letters(tc.sample_code_four)))
+print(cf.sorted_symbol_freq(cf.most_frequent_symbols(tc.sample_code_four)))
+print('=======================================================================Test Five=======================================================================')
+print(cf.sorted_letter_freq(cf.most_frequent_letters(tc.sample_code_five)))
+print(cf.sorted_symbol_freq(cf.most_frequent_symbols(tc.sample_code_five)))
+print('=======================================================================Test Six========================================================================')
+print(cf.sorted_letter_freq(cf.most_frequent_letters(tc.sample_code_six)))
+print(cf.sorted_symbol_freq(cf.most_frequent_symbols(tc.sample_code_six)))
+print('=======================================================================Test Seven=======================================================================')
+print(cf.sorted_letter_freq(cf.most_frequent_letters(tc.sample_code_seven)))
+print(cf.sorted_symbol_freq(cf.most_frequent_symbols(tc.sample_code_seven)))
+print('=======================================================================Test Eight========================================================================')
+print(cf.sorted_letter_freq(cf.most_frequent_letters(tc.sample_code_eight)))
+print(cf.sorted_symbol_freq(cf.most_frequent_symbols(tc.sample_code_eight)))
+print('=======================================================================Test Nine=======================================================================')
+print(cf.sorted_letter_freq(cf.most_frequent_letters(tc.sample_code_nine)))
+print(cf.sorted_symbol_freq(cf.most_frequent_symbols(tc.sample_code_nine)))
+print('=======================================================================Test Ten========================================================================')
+print(cf.sorted_letter_freq(cf.most_frequent_letters(tc.sample_code_ten)))
+print(cf.sorted_symbol_freq(cf.most_frequent_symbols(tc.sample_code_ten)))
+

@@ -1,0 +1,59 @@
+#for chemistry webassign
+
+#for atm
+def function_atm(input_choice, input_number, input_final):
+    #turns atm to torr/mmHG
+    if input_final == "torr":
+        print(input_number * 760)
+        
+    #turns atm to kpa
+    elif input_final ==  "kpa":
+        print(input_number * 101.3)
+            
+
+def function_torr(input_choice, input_number, input_final):
+    #turns torr to atm
+    if input_final == "atm":
+        print(input_number / 760)
+    #turns torr to kpa
+    elif input_final == "kpa":
+        print(input_number * 0.13328947)
+       
+        
+def function_kpa(input_choice, input_number, input_final):
+    #turns kpa to atm
+    if input_final == "atm":
+        print(input_number / 101.3)
+    #turns kpa to torr
+    elif input_final == "torr":
+        print(input_number * 7.50246792)
+        
+def function_
+        
+#driver
+if __name__ == "__main__":   
+    while (1 != 0):
+        print("type everything in lowercase \n")
+
+        input_choice = str(input("what is your unit "))
+        input_number = float(input("number of the unit "))
+        input_final = str(input("what is the unit you want to convert to "))
+                
+        if input_choice == "atm":
+            function_atm(input_choice, input_number, input_final)
+            
+        if input_choice == "torr":
+            function_torr(input_choice, input_number, input_final)
+
+        if input_choice == "kpa":
+            function_kpa(input_choice, input_number, input_final)
+        
+        print('\n')
+        
+        
+
+    
+
+        
+
+
